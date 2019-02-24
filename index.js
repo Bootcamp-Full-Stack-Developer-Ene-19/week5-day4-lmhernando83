@@ -7,50 +7,64 @@ function addToDo () {
     const btnEdit = addEditBtnElement();
     const btnDone = addDoneBtnElement();
     li.appendChild(text);
-    li.appendChild(btnDelete);
-    li.appendChild(btnEdit);
-    li.appendChild(btnDone);
-    li.classList.add("task");
+    li.appendChild(btnDelete).classList.add('action-btn');
+    li.appendChild(btnEdit).classList.add('action-btn');
+    li.appendChild(btnDone).classList.add('action-btn');
+    li.classList.add('task');
     ul.appendChild(li);
 }
 function addDeleteBtnElement () {
-    const btnDelete;
+    const btnDelete = document.createElement('button');
+    const text = document.createTextNode('Delete');
+    btnDelete.appendChild(text);
+    btnDelete.addEventListener('click', deleteElement);
     return btnDelete;
 }
 function addEditBtnElement () {
-    const btnEdit;
-
+    const btnEdit = document.createElement('button');
+    const text = document.createTextNode('Edit');
+    btnEdit.appendChild(text);
+    btnEdit.addEventListener('click', editElement);
     return btnEdit;
 }
-function addDoneBtnElement () {
-    const btnDone;
+function addDoneBtnElement() {
+    const btnDone = document.createElement('button');
+    const text = document.createTextNode('Done');
+    btnDone.appendChild(text);
+    btnDone.addEventListener('click', doneElement);
     return btnDone;
 }
 
 function addSaveBtnElement () {
-    const btnSave;
+    const btnSave = document.createElement('button');
+    const text = document.createTextNode('Save');
+    btnSave.appendChild(text);
+    btnSave.addEventListener('click', saveElement);
     return btnSave;
 }
 function deleteElement(e) {
     //TODO Borrar el elemento li desde el cual se dispara el evento.
+    const li = e.target.parentElement;
+    li.parentNode.removeChild(li);
 }
 function doneElement(e) {
     //TODO Cambiar el color de fondo del elemento li desde el cual se dispara el evento de rojo a verde.
+    const li = e.target.parentElement;
+    li.style.backgroundColor = 'lightgreen';
 }
 function editElement(e) {
     const li = e.target.parentElement;
-    const arr = li.childNodes;
     const liText = li.childNodes[0];
     const btnDone = li.childNodes[1];
     const btnEdit = li.childNodes[2];
     const btnDelete = li.childNodes[3];
     const btnSave = addSaveBtnElement();
     const input = document.createElement('input');
-    input.setAttribute("id", "inputEdit");
+    input.setAttribute('id', 'inputEdit');
     li.removeChild(liText);
     li.insertBefore(input, btnDone);
-    li.removeChild(btnEdit);
-    li.insertBefore(btnSave, btnDelete);
+    li.removeChild(btnEdit).classList.add('action-btn');
+    li.insertBefore(btnSave, btnDelete).classList.add('action-btn');
 }
 
 function saveElement(e) {
@@ -62,6 +76,7 @@ function saveElement(e) {
     const text = document.createTextNode(inputValue);
     li.insertBefore(text, input);
     li.removeChild(input);
-    li.insertBefore(btnEdit, btnSave);
-    li.removeChild(btnSave);
+    li.insertBefore(btnEdit, btnSave).classList.add('action-btn');
+    li.removeChild(btnSave).classList.add('action-btn');
 }
+
